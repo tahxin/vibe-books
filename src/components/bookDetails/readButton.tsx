@@ -2,28 +2,14 @@
 import React from 'react';
 import { useBooks } from '@/context/BooksContext';
 import { Book } from '@/types/booktypes';
-import { toast } from 'react-toastify';
 
 const ReadButton = ({ book }: { book: Book }) => {
-  const { addToRead, readBooks, setReadBooks } = useBooks();
-
-  const handleReadBook = () => {
-    if (addToRead) {
-      addToRead(book);
-    } else {
-      if (!readBooks.some((b: Book) => b.bookId === book.bookId)) {
-        setReadBooks((prevReadBooks: Book[]) => [...prevReadBooks, book]);
-        toast.success(`"${book.bookName}" added to Read List!`);
-      } else {
-        toast.warn(`"${book.bookName}" is already in your Read List!`);
-      }
-    }
-  };
+  const { addToRead } = useBooks();
 
   return (
     <button
-      onClick={handleReadBook}
-      className="btn btn-outline border-base-300 font-semibold px-6 hover:bg-neutral hover:text-neutral-content"
+      onClick={() => addToRead(book)}
+      className="btn bg-white hover:bg-gray-100 text-[#131313] font-semibold text-base px-8 py-3 rounded-xl border border-[#1313134D] shadow-none h-auto min-h-0 transition-colors"
     >
       Read
     </button>

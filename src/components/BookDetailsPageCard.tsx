@@ -20,9 +20,9 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
 
   if (!book) {
     return (
-      <div className="p-8 text-center">
-        <h2 className="text-xl font-semibold text-error">Book not found</h2>
-        <p className="text-sm text-base-content/70 mt-2">
+      <div className="p-12 text-center">
+        <h2 className="text-2xl font-semibold text-error">Book not found</h2>
+        <p className="text-base text-[#131313B3] mt-2">
           Unable to find details for the requested book.
         </p>
       </div>
@@ -30,81 +30,81 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
   }
 
   return (
-    <div className="card lg:card-side bg-base-100 border border-base-200 shadow-sm overflow-hidden p-6 lg:p-8 gap-8">
-      <div className="lg:w-5/12 bg-base-200/50 rounded-2xl flex items-center justify-center p-8">
-        <Image
-          src={book.image}
-          alt={book.bookName}
-          width={360}
-          height={500}
-          className="rounded-xl shadow-md object-cover max-h-120 w-auto transition-transform duration-300 hover:scale-[1.02]"
-          priority
-          unoptimized
-        />
-      </div>
+    <div className="max-w-6xl mx-auto py-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        {/* Left Column: Book Cover Image */}
+        <div className="bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-[540px]">
+          <Image
+            src={book.image}
+            alt={book.bookName}
+            width={340}
+            height={480}
+            className="rounded-xl shadow-2xl object-contain max-h-[460px] w-auto transition-transform duration-300 hover:scale-[1.02]"
+            priority
+            unoptimized
+          />
+        </div>
 
-      <div className="lg:w-7/12 flex flex-col justify-between">
-        <div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-base-content">
+        {/* Right Column: Book Details */}
+        <div className="flex flex-col justify-center">
+          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold font-serif text-[#131313] leading-tight">
             {book.bookName}
           </h1>
 
-          <p className="text-base lg:text-lg text-base-content/70 font-medium mt-2">
+          <p className="text-base lg:text-lg text-[#131313CC] font-medium mt-3 mb-4">
             By : {book.author}
           </p>
 
-          <div className="divider my-2"></div>
+          <div className="border-b border-[#13131326] my-2"></div>
 
-          <p className="text-base font-medium text-base-content/80">
+          <p className="text-base lg:text-lg text-[#131313CC] font-medium py-1">
             {book.category}
           </p>
 
-          <div className="divider my-2"></div>
+          <div className="border-b border-[#13131326] my-2"></div>
 
-          <p className="text-sm lg:text-base leading-relaxed text-base-content/80">
-            <span className="font-bold text-base-content">Review : </span>
+          <p className="text-[#131313B3] text-sm lg:text-base leading-relaxed my-3">
+            <strong className="text-[#131313] font-bold">Review : </strong>
             {book.review}
           </p>
 
-          <div className="flex flex-wrap items-center gap-2 mt-4">
-            <span className="font-bold text-base-content mr-2">Tag</span>
+          <div className="flex flex-wrap items-center gap-3 my-3">
+            <span className="font-bold text-sm lg:text-base text-[#131313] mr-2">Tag</span>
             {book.tags?.map((tag, index) => (
               <span
                 key={index}
-                className="badge bg-green-50 text-green-600 border border-green-200 font-semibold px-3 py-3"
+                className="bg-[#23BE0A0D] text-[#23BE0A] font-semibold text-sm px-4 py-1.5 rounded-full"
               >
                 #{tag}
               </span>
             ))}
           </div>
 
-          <div className="divider my-3"></div>
+          <div className="border-b border-[#13131326] my-4"></div>
 
-          <div className="space-y-2 text-sm lg:text-base">
-            <div className="flex items-center gap-8">
-              <span className="w-40 text-base-content/70">Number of Pages:</span>
-              <span className="font-bold text-base-content">{book.totalPages}</span>
+          <div className="space-y-2.5 text-sm lg:text-base">
+            <div className="flex items-center">
+              <span className="w-48 text-[#131313B3]">Number of Pages:</span>
+              <span className="font-bold text-[#131313]">{book.totalPages}</span>
             </div>
-            <div className="flex items-center gap-8">
-              <span className="w-40 text-base-content/70">Publisher:</span>
-              <span className="font-bold text-base-content">{book.publisher}</span>
+            <div className="flex items-center">
+              <span className="w-48 text-[#131313B3]">Publisher:</span>
+              <span className="font-bold text-[#131313]">{book.publisher}</span>
             </div>
-            <div className="flex items-center gap-8">
-              <span className="w-40 text-base-content/70">Year of Publishing:</span>
-              <span className="font-bold text-base-content">{book.yearOfPublishing}</span>
+            <div className="flex items-center">
+              <span className="w-48 text-[#131313B3]">Year of Publishing:</span>
+              <span className="font-bold text-[#131313]">{book.yearOfPublishing}</span>
             </div>
-            <div className="flex items-center gap-8">
-              <span className="w-40 text-base-content/70">Rating:</span>
-              <span className="font-bold text-base-content flex items-center gap-1">
-                {book.rating} <span className="text-amber-500">★</span>
-              </span>
+            <div className="flex items-center">
+              <span className="w-48 text-[#131313B3]">Rating:</span>
+              <span className="font-bold text-[#131313]">{book.rating}</span>
             </div>
           </div>
-        </div>
 
-        <div className="card-actions flex gap-4 mt-8">
-          <ReadButton book={book} />
-          <WishlistButton book={book} />
+          <div className="flex items-center gap-4 mt-7">
+            <ReadButton book={book} />
+            <WishlistButton book={book} />
+          </div>
         </div>
       </div>
     </div>
