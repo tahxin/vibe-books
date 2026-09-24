@@ -2,6 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import Book from '@/types/booktypes';
 import booksData from '../../public/booksData.json';
+import ReadButton from './bookDetails/readButton';
+import WishlistButton from './bookDetails/wishlistButton';
 
 export interface BookDetailsPageCardProps {
   book?: Book;
@@ -35,7 +37,7 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
           alt={book.bookName}
           width={360}
           height={500}
-          className="rounded-xl shadow-md object-cover max-h-[480px] w-auto transition-transform duration-300 hover:scale-[1.02]"
+          className="rounded-xl shadow-md object-cover max-h-120 w-auto transition-transform duration-300 hover:scale-[1.02]"
           priority
           unoptimized
         />
@@ -101,12 +103,8 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
         </div>
 
         <div className="card-actions flex gap-4 mt-8">
-          <button className="btn btn-outline border-base-300 font-semibold px-6 hover:bg-neutral hover:text-neutral-content">
-            Read
-          </button>
-          <button className="btn btn-info text-white font-semibold px-6">
-            Wishlist
-          </button>
+          <ReadButton book={book} />
+          <WishlistButton book={book} />
         </div>
       </div>
     </div>
