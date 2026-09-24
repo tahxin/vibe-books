@@ -68,16 +68,16 @@ const ReadBooksList = () => {
         {books.map((book: Book) => (
           <div
             key={book.bookId}
-            className="border border-[#13131326] rounded-2xl p-6 bg-white flex flex-col md:flex-row gap-6 items-center shadow-none transition-all duration-300 hover:shadow-xs"
+            className="border border-[#13131326] rounded-3xl p-5 sm:p-6 bg-white flex flex-col md:flex-row gap-5 md:gap-7 items-center md:items-start shadow-none transition-all duration-300 hover:shadow-md hover:border-[#23BE0A40]"
           >
             {/* Left Cover Box */}
-            <div className="bg-[#13131308] rounded-2xl w-full md:w-56 h-60 flex items-center justify-center p-6 shrink-0">
+            <div className="bg-[#13131308] rounded-2xl w-full md:w-56 h-56 sm:h-64 flex items-center justify-center p-4 sm:p-6 shrink-0">
               <Image
                 src={book.image}
                 alt={book.bookName}
                 width={140}
                 height={190}
-                className="rounded-lg object-contain max-h-48 w-auto drop-shadow-md"
+                className="rounded-lg object-contain max-h-48 sm:max-h-52 w-auto drop-shadow-md transition-transform duration-300 hover:scale-105"
                 unoptimized
               />
             </div>
@@ -85,27 +85,27 @@ const ReadBooksList = () => {
             {/* Right Details */}
             <div className="flex-1 w-full flex flex-col justify-between">
               <div>
-                <h2 className="text-2xl font-bold font-(family-name:--font-playfair) text-[#131313]">
+                <h2 className="text-xl sm:text-2xl font-bold font-(family-name:--font-playfair) text-[#131313]">
                   {book.bookName}
                 </h2>
-                <p className="text-base font-medium text-[#131313CC] mt-2 mb-3">
+                <p className="text-sm sm:text-base font-medium text-[#131313CC] mt-1.5 sm:mt-2 mb-3">
                   By : {book.author}
                 </p>
 
                 {/* Tags & Year */}
-                <div className="flex flex-wrap items-center gap-3 my-2">
-                  <span className="font-bold text-base text-[#131313] mr-1">Tag</span>
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 my-2">
+                  <span className="font-bold text-xs sm:text-base text-[#131313] mr-1">Tag</span>
                   {book.tags?.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="bg-[#23BE0A0D] text-[#23BE0A] font-medium text-sm px-4 py-1.5 rounded-full"
+                      className="bg-[#23BE0A0D] text-[#23BE0A] font-medium text-xs sm:text-sm px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full"
                     >
                       #{tag}
                     </span>
                   ))}
-                  <div className="flex items-center gap-2 text-base text-[#131313B3] ml-2">
+                  <div className="flex items-center gap-1.5 text-xs sm:text-base text-[#131313B3]">
                     <svg
-                      className="w-5 h-5 text-[#13131399]"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-[#13131399]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -128,10 +128,10 @@ const ReadBooksList = () => {
                 </div>
 
                 {/* Publisher & Page */}
-                <div className="flex flex-wrap items-center gap-6 text-[#131313B3] text-base my-3">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-[#131313B3] text-xs sm:text-base my-2.5 sm:my-3">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
                     <svg
-                      className="w-5 h-5 text-[#13131399]"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-[#13131399]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -145,9 +145,9 @@ const ReadBooksList = () => {
                     </svg>
                     <span>Publisher: {book.publisher}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
                     <svg
-                      className="w-5 h-5 text-[#13131399]"
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-[#13131399]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -165,22 +165,22 @@ const ReadBooksList = () => {
               </div>
 
               {/* Divider */}
-              <div className="border-b border-[#13131326] my-2"></div>
+              <div className="border-b border-[#13131326] my-2 sm:my-3"></div>
 
               {/* Badges & Action */}
-              <div className="flex flex-wrap items-center justify-between gap-4 mt-2">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="bg-[#328EFF26] text-[#328EFF] font-medium text-base px-5 py-2.5 rounded-full">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mt-2">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                  <span className="bg-[#328EFF26] text-[#328EFF] font-medium text-xs sm:text-base px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-full">
                     Category: {book.category}
                   </span>
-                  <span className="bg-[#FFAC3326] text-[#FFAC33] font-medium text-base px-5 py-2.5 rounded-full">
+                  <span className="bg-[#FFAC3326] text-[#FFAC33] font-medium text-xs sm:text-base px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-full">
                     Rating: {book.rating}
                   </span>
                 </div>
 
                 <Link
                   href={`/books/${book.bookId}`}
-                  className="btn bg-[#23BE0A] hover:bg-[#1fa909] text-white font-semibold text-base px-6 py-2.5 rounded-full border-none shadow-none h-auto min-h-0 cursor-pointer"
+                  className="btn bg-[#23BE0A] hover:bg-[#1fa909] text-white font-semibold text-sm sm:text-base px-6 py-2.5 rounded-full border-none shadow-none h-auto min-h-0 cursor-pointer text-center w-full sm:w-auto"
                 >
                   View Details
                 </Link>

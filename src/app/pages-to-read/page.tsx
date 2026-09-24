@@ -106,60 +106,61 @@ const PagesToReadPage = () => {
       ) : (
         <div className="space-y-8">
           {/* Summary Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-6 text-center">
-              <span className="text-sm font-medium text-[#13131380]">Books Read</span>
-              <h3 className="text-3xl font-bold text-[#131313] mt-1">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-5 sm:p-6 text-center shadow-xs">
+              <span className="text-xs sm:text-sm font-medium text-[#13131380]">Books Read</span>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#131313] mt-1">
                 {readBooks.length}
               </h3>
             </div>
 
-            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-6 text-center">
-              <span className="text-sm font-medium text-[#13131380]">Total Pages</span>
-              <h3 className="text-3xl font-bold text-[#23BE0A] mt-1">
+            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-5 sm:p-6 text-center shadow-xs">
+              <span className="text-xs sm:text-sm font-medium text-[#13131380]">Total Pages</span>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#23BE0A] mt-1">
                 {totalPages}
               </h3>
             </div>
 
-            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-6 text-center">
-              <span className="text-sm font-medium text-[#13131380]">Average Pages/Book</span>
-              <h3 className="text-3xl font-bold text-[#50B1C9] mt-1">
+            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-5 sm:p-6 text-center shadow-xs">
+              <span className="text-xs sm:text-sm font-medium text-[#13131380]">Average Pages/Book</span>
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#50B1C9] mt-1">
                 {Math.round(totalPages / readBooks.length)}
               </h3>
             </div>
           </div>
 
           {/* Recharts Custom Shape Triangle Bar Chart */}
-          <div className="bg-[#13131305] border border-[#13131315] rounded-3xl p-6 sm:p-10">
-            <h2 className="text-xl font-bold text-[#131313] mb-6">
+          <div className="bg-[#13131305] border border-[#13131315] rounded-3xl p-4 sm:p-8 lg:p-10">
+            <h2 className="text-lg sm:text-xl font-bold text-[#131313] mb-4 sm:mb-6">
               Pages Read Comparison
             </h2>
 
             {!isMounted ? (
-              <div className="w-full h-96 flex items-center justify-center">
+              <div className="w-full h-80 sm:h-96 flex items-center justify-center">
                 <span className="loading loading-spinner loading-lg text-[#23BE0A]"></span>
               </div>
             ) : (
-              <div className="w-full h-110 sm:h-120">
+              <div className="w-full h-80 sm:h-110 lg:h-120">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={chartData}
                     margin={{
                       top: 25,
-                      right: 20,
-                      left: 10,
-                      bottom: 50,
+                      right: 15,
+                      left: -15,
+                      bottom: 55,
                     }}
                   >
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#13131315" />
                     <XAxis
                       dataKey="name"
-                      tick={{ fill: '#131313B3', fontSize: 13 }}
+                      tick={{ fill: '#131313B3', fontSize: 11 }}
                       interval={0}
-                      angle={-15}
+                      angle={-25}
                       textAnchor="end"
+                      height={60}
                     />
-                    <YAxis tick={{ fill: '#131313B3', fontSize: 13 }} />
+                    <YAxis tick={{ fill: '#131313B3', fontSize: 11 }} />
                     <Tooltip
                       formatter={(value: unknown) => [`${value} pages`, 'Pages']}
                       labelFormatter={(_, payload) =>
