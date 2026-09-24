@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Link from 'next/link';
+import EmptyState from '@/components/shared/emptyState';
 import { useBooks } from '@/context/BooksContext';
 import {
   BarChart,
@@ -88,21 +88,13 @@ const PagesToReadPage = () => {
       </div>
 
       {readBooks.length === 0 ? (
-        <div className="text-center py-20 px-4 bg-[#13131305] rounded-3xl border border-dashed border-[#13131326] my-6">
-          <div className="text-5xl mb-4">📊</div>
-          <h2 className="text-2xl font-bold text-[#131313]">
-            No books in your Read list yet
-          </h2>
-          <p className="text-base text-[#131313B3] mt-2 max-w-md mx-auto">
-            Mark books as &quot;Read&quot; from their details page to see them graphed here in Recharts!
-          </p>
-          <Link
-            href="/"
-            className="btn bg-[#23BE0A] hover:bg-[#1fa909] text-white font-semibold text-base px-6 py-2.5 rounded-full border-none shadow-none mt-6 inline-flex"
-          >
-            Explore Books
-          </Link>
-        </div>
+        <EmptyState
+          title="No books in your Read list yet"
+          description="Mark books as Read from their details page to see them graphed here in Recharts!"
+          icon="📊"
+          actionText="Explore Books"
+          actionHref="/"
+        />
       ) : (
         <div className="space-y-8">
           {/* Summary Stats Cards */}
