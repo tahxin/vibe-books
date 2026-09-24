@@ -2,116 +2,199 @@
 import React from 'react';
 import Link from 'next/link';
 import { useBooks } from '@/context/BooksContext';
-import { Book } from '@/types/booktypes';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from 'recharts';
+
+const colors = [
+  '#0088FE',
+  '#00C49F',
+  '#FFBB28',
+  '#FF8042',
+  '#22c55e',
+  '#ec4899',
+  '#8b5cf6',
+  '#06b6d4',
+];
+
+const getPath = (x: number, y: number, width: number, height: number) => {
+  return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
+  ${x + width / 2}, ${y}
+  C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${y + height} ${x + width}, ${y + height}
+  Z`;
+};
+
+interface TriangleBarProps {
+  fill?: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  [key: string]: unknown;
+}
+
+const TriangleBar = (props: TriangleBarProps) => {
+  const { fill, x = 0, y = 0, width = 0, height = 0 } = props;
+  return (
+    <path
+      d={getPath(Number(x), Number(y), Number(width), Number(height))}
+      stroke="none"
+      fill={fill}
+    />
+  );
+};
+
+const emptySubscribe = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 const PagesToReadPage = () => {
   const { readBooks } = useBooks();
+  const isMounted = React.useSyncExternalStore(
+    emptySubscribe,
+    getClientSnapshot,
+    getServerSnapshot
+  );
 
-  const totalPages = readBooks.reduce((acc, book) => acc + (book.totalPages || 0), 0);
-  const maxPages = Math.max(...readBooks.map((b) => b.totalPages), 100);
+  const totalPages = readBooks.reduce(
+    (acc, book) => acc + (book.totalPages || 0),
+    0
+  );
 
-  const colors = [
-    '#22c55e', // green
-    '#3b82f6', // blue
-    '#f59e0b', // amber
-    '#ec4899', // pink
-    '#8b5cf6', // purple
-    '#06b6d4', // cyan
-    '#10b981', // emerald
-    '#f97316', // orange
-  ];
+  const chartData = readBooks.map((book) => ({
+    name:
+      book.bookName.length > 16
+        ? `${book.bookName.slice(0, 14)}...`
+        : book.bookName,
+    fullName: book.bookName,
+    pages: book.totalPages,
+  }));
 
   return (
-    <div className="container mx-auto py-10 px-4 max-w-5xl">
-      <div className="bg-base-200/60 rounded-2xl py-8 mb-8 text-center shadow-xs">
-        <h1 className="text-2xl sm:text-3xl font-bold text-base-content">
-          Pages To Read
-        </h1>
-        <p className="text-sm text-base-content/70 mt-2">
-          Visual overview of your reading achievements and page counts
+    <div className="container mx-auto py-10 px-4 max-w-6xl">
+      {/* Header Banner */}
+      <div className="bg-[#13131308] rounded-2xl py-8 mb-8 text-center">
+        <h1 className="text-3xl font-bold text-[#131313]">Pages to Read</h1>
+        <p className="text-base text-[#13131380] mt-2">
+          Visual chart showing page counts for books in your Read List
         </p>
       </div>
 
       {readBooks.length === 0 ? (
-        <div className="text-center py-16 px-4 bg-base-200/30 rounded-2xl border border-dashed border-base-300">
+        <div className="text-center py-20 px-4 bg-[#13131305] rounded-3xl border border-dashed border-[#13131326] my-6">
           <div className="text-5xl mb-4">📊</div>
-          <h2 className="text-xl font-bold text-base-content">
-            No books read yet
+          <h2 className="text-2xl font-bold text-[#131313]">
+            No books in your Read list yet
           </h2>
-          <p className="text-sm text-base-content/70 mt-2 max-w-md mx-auto">
-            Mark books as Read from their details page to visualize your reading progress here!
+          <p className="text-base text-[#131313B3] mt-2 max-w-md mx-auto">
+            Mark books as &quot;Read&quot; from their details page to see them graphed here in Recharts!
           </p>
-          <Link href="/" className="btn btn-primary btn-sm mt-6">
+          <Link
+            href="/"
+            className="btn bg-[#23BE0A] hover:bg-[#1fa909] text-white font-semibold text-base px-6 py-2.5 rounded-full border-none shadow-none mt-6 inline-flex"
+          >
             Explore Books
           </Link>
         </div>
       ) : (
         <div className="space-y-8">
-          {/* Summary Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="stat bg-base-100 border border-base-200 rounded-xl shadow-xs">
-              <div className="stat-title text-base-content/70">Books Read</div>
-              <div className="stat-value text-primary">{readBooks.length}</div>
-              <div className="stat-desc">Total completed books</div>
+          {/* Summary Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-6 text-center">
+              <span className="text-sm font-medium text-[#13131380]">Books Read</span>
+              <h3 className="text-3xl font-bold text-[#131313] mt-1">
+                {readBooks.length}
+              </h3>
             </div>
 
-            <div className="stat bg-base-100 border border-base-200 rounded-xl shadow-xs">
-              <div className="stat-title text-base-content/70">Total Pages</div>
-              <div className="stat-value text-success">{totalPages}</div>
-              <div className="stat-desc">Pages across all read books</div>
+            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-6 text-center">
+              <span className="text-sm font-medium text-[#13131380]">Total Pages</span>
+              <h3 className="text-3xl font-bold text-[#23BE0A] mt-1">
+                {totalPages}
+              </h3>
             </div>
 
-            <div className="stat bg-base-100 border border-base-200 rounded-xl shadow-xs">
-              <div className="stat-title text-base-content/70">Average Pages</div>
-              <div className="stat-value text-info">
+            <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-6 text-center">
+              <span className="text-sm font-medium text-[#13131380]">Average Pages/Book</span>
+              <h3 className="text-3xl font-bold text-[#50B1C9] mt-1">
                 {Math.round(totalPages / readBooks.length)}
-              </div>
-              <div className="stat-desc">Pages per book</div>
+              </h3>
             </div>
           </div>
 
-          {/* Custom SVG Bar Chart */}
-          <div className="bg-base-100 border border-base-200 rounded-2xl p-6 sm:p-8 shadow-xs">
-            <h2 className="text-lg font-bold text-base-content mb-6">
-              Page Count Comparison
+          {/* Recharts Custom Shape Triangle Bar Chart */}
+          <div className="bg-[#13131305] border border-[#13131315] rounded-3xl p-6 sm:p-10">
+            <h2 className="text-xl font-bold text-[#131313] mb-6">
+              Pages Read Comparison
             </h2>
 
-            <div className="overflow-x-auto pb-4">
-              <div className="min-w-[600px] h-72 flex items-end gap-6 sm:gap-10 border-b border-l border-base-300 px-4 pb-2 pt-6">
-                {readBooks.map((book: Book, index) => {
-                  const heightPercent = Math.max(
-                    15,
-                    Math.round((book.totalPages / maxPages) * 100)
-                  );
-                  const color = colors[index % colors.length];
-
-                  return (
-                    <div
-                      key={book.bookId}
-                      className="flex-1 flex flex-col items-center h-full justify-end group"
-                    >
-                      <span className="text-xs font-semibold text-base-content/80 mb-1">
-                        {book.totalPages}
-                      </span>
-                      <div
-                        style={{
-                          height: `${heightPercent}%`,
-                          backgroundColor: color,
-                        }}
-                        className="w-full max-w-[48px] rounded-t-lg transition-all duration-300 group-hover:opacity-85 shadow-xs"
-                        title={`${book.bookName}: ${book.totalPages} pages`}
-                      />
-                      <span
-                        className="text-[11px] font-medium text-base-content/70 mt-2 text-center truncate max-w-[70px]"
-                        title={book.bookName}
-                      >
-                        {book.bookName}
-                      </span>
-                    </div>
-                  );
-                })}
+            {!isMounted ? (
+              <div className="w-full h-96 flex items-center justify-center">
+                <span className="loading loading-spinner loading-lg text-[#23BE0A]"></span>
               </div>
-            </div>
+            ) : (
+              <div className="w-full h-[440px] sm:h-[480px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    data={chartData}
+                    margin={{
+                      top: 25,
+                      right: 20,
+                      left: 10,
+                      bottom: 50,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#13131315" />
+                    <XAxis
+                      dataKey="name"
+                      tick={{ fill: '#131313B3', fontSize: 13 }}
+                      interval={0}
+                      angle={-15}
+                      textAnchor="end"
+                    />
+                    <YAxis tick={{ fill: '#131313B3', fontSize: 13 }} />
+                    <Tooltip
+                      formatter={(value: unknown) => [`${value} pages`, 'Pages']}
+                      labelFormatter={(_, payload) =>
+                        payload?.[0]?.payload?.fullName || ''
+                      }
+                      contentStyle={{
+                        backgroundColor: '#ffffff',
+                        borderRadius: '12px',
+                        border: '1px solid #13131326',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
+                      }}
+                    />
+                    <Bar
+                      dataKey="pages"
+                      shape={(barProps: unknown) => (
+                        <TriangleBar {...(barProps as TriangleBarProps)} />
+                      )}
+                      label={{
+                        position: 'top',
+                        fill: '#131313',
+                        fontSize: 12,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {chartData.map((_, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={colors[index % colors.length]}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
           </div>
         </div>
       )}
