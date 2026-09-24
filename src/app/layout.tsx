@@ -22,9 +22,38 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
+const appName = process.env.NEXT_PUBLIC_APP_NAME || "Book Vibe";
+const appDescription =
+  process.env.NEXT_PUBLIC_APP_DESCRIPTION ||
+  "Discover and read your favorite books, curate wishlists, and track your reading journey.";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: process.env.NEXT_PUBLIC_APP_NAME || "Book Vibe",
-  description: process.env.NEXT_PUBLIC_APP_DESCRIPTION || "Discover and read your favorite books",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: appName,
+    template: `%s | ${appName}`,
+  },
+  description: appDescription,
+  applicationName: appName,
+  authors: [{ name: "Shahjalal Ahmed Nishat" }],
+  creator: "Shahjalal Ahmed Nishat",
+  openGraph: {
+    title: appName,
+    description: appDescription,
+    url: siteUrl,
+    siteName: appName,
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: appName,
+    description: appDescription,
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
