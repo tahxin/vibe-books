@@ -8,8 +8,8 @@ export interface BooksContextType {
   setReadBooks: React.Dispatch<React.SetStateAction<Book[]>>;
   wishlist: Book[];
   setWishlist: React.Dispatch<React.SetStateAction<Book[]>>;
-  addToRead: (book: Book) => boolean;
-  addToWishlist: (book: Book) => boolean;
+  addToRead: (book: Book) => Promise<boolean>;
+  addToWishlist: (book: Book) => Promise<boolean>;
 }
 
 const BooksContext = createContext<BooksContextType | undefined>(undefined);
@@ -20,7 +20,8 @@ export const BooksContextProvider = ({ children }: { children: React.ReactNode }
       try {
         const stored = localStorage.getItem('readBooks');
         return stored ? JSON.parse(stored) : [];
-      } catch {
+      } catch (error) {
+        console.error('Error reading readBooks from localStorage:', error);
         return [];
       }
     }
@@ -32,7 +33,8 @@ export const BooksContextProvider = ({ children }: { children: React.ReactNode }
       try {
         const stored = localStorage.getItem('wishlist');
         return stored ? JSON.parse(stored) : [];
-      } catch {
+      } catch (error) {
+        console.error('Error reading wishlist from localStorage:', error);
         return [];
       }
     }
@@ -43,8 +45,8 @@ export const BooksContextProvider = ({ children }: { children: React.ReactNode }
   useEffect(() => {
     try {
       localStorage.setItem('readBooks', JSON.stringify(readBooks));
-    } catch {
-      // Ignore localStorage errors
+    } catch (error) {
+      console.error('Error saving readBooks to localStorage:', error);
     }
   }, [readBooks]);
 
@@ -52,41 +54,58 @@ export const BooksContextProvider = ({ children }: { children: React.ReactNode }
   useEffect(() => {
     try {
       localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    } catch {
-      // Ignore localStorage errors
+    } catch (error) {
+      console.error('Error saving wishlist to localStorage:', error);
     }
   }, [wishlist]);
 
-  const addToRead = (book: Book): boolean => {
-    const alreadyRead = readBooks.some((b) => b.bookId === book.bookId);
-    if (alreadyRead) {
-      toast.warn(`"${book.bookName}" is already in your Read List!`);
+  const addToRead = async (book: Book): Promise<boolean> => {
+    try {
+      // Simulate minor async processing to ensure smooth UI and safety
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      const alreadyRead = readBooks.some((b) => b.bookId === book.bookId);
+      if (alreadyRead) {
+        toast.warn(`"${book.bookName}" is already in your Read List!`);
+        return false;
+      }
+
+      setReadBooks((prev) => [...prev, book]);
+      // If the book was in the wishlist, remove it when marked as read
+      setWishlist((prev) => prev.filter((b) => b.bookId !== book.bookId));
+      toast.success(`"${book.bookName}" added to Read List!`);
+      return true;
+    } catch (error) {
+      console.error('Error in addToRead async operation:', error);
+      toast.error('Failed to add book to Read list. Please try again.');
       return false;
     }
-
-    setReadBooks((prev) => [...prev, book]);
-    // If the book was in the wishlist, remove it when marked as read
-    setWishlist((prev) => prev.filter((b) => b.bookId !== book.bookId));
-    toast.success(`"${book.bookName}" added to Read List!`);
-    return true;
   };
 
-  const addToWishlist = (book: Book): boolean => {
-    const alreadyRead = readBooks.some((b) => b.bookId === book.bookId);
-    if (alreadyRead) {
-      toast.error(`You have already read "${book.bookName}"! Cannot add to Wishlist.`);
+  const addToWishlist = async (book: Book): Promise<boolean> => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      const alreadyRead = readBooks.some((b) => b.bookId === book.bookId);
+      if (alreadyRead) {
+        toast.error(`You have already read "${book.bookName}"! Cannot add to Wishlist.`);
+        return false;
+      }
+
+      const alreadyInWishlist = wishlist.some((b) => b.bookId === book.bookId);
+      if (alreadyInWishlist) {
+        toast.warn(`"${book.bookName}" is already in your Wishlist!`);
+        return false;
+      }
+
+      setWishlist((prev) => [...prev, book]);
+      toast.success(`"${book.bookName}" added to Wishlist!`);
+      return true;
+    } catch (error) {
+      console.error('Error in addToWishlist async operation:', error);
+      toast.error('Failed to add book to Wishlist. Please try again.');
       return false;
     }
-
-    const alreadyInWishlist = wishlist.some((b) => b.bookId === book.bookId);
-    if (alreadyInWishlist) {
-      toast.warn(`"${book.bookName}" is already in your Wishlist!`);
-      return false;
-    }
-
-    setWishlist((prev) => [...prev, book]);
-    toast.success(`"${book.bookName}" added to Wishlist!`);
-    return true;
   };
 
   return (

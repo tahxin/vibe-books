@@ -11,15 +11,15 @@ const WishlistButton = ({ book }: WishlistButtonProps) => {
   const { addToWishlist } = useBooks();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleWishlist = () => {
+  const handleWishlist = async () => {
     setIsLoading(true);
-    setTimeout(() => {
-      try {
-        addToWishlist(book);
-      } finally {
-        setIsLoading(false);
-      }
-    }, 250);
+    try {
+      await addToWishlist(book);
+    } catch (error) {
+      console.error('Error in handleWishlist async action:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

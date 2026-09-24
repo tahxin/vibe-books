@@ -7,15 +7,15 @@ const ReadButton = ({ book }: { book: Book }) => {
   const { addToRead } = useBooks();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleReadBook = () => {
+  const handleReadBook = async () => {
     setIsLoading(true);
-    setTimeout(() => {
-      try {
-        addToRead(book);
-      } finally {
-        setIsLoading(false);
-      }
-    }, 250);
+    try {
+      await addToRead(book);
+    } catch (error) {
+      console.error('Error in handleReadBook async action:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
