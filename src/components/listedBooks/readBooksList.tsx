@@ -182,9 +182,10 @@ const ReadBooksList = () => {
           value={sortBy}
           onChange={(e) => {
             startTransition(() => {
-              setSortBy(e.target.value as SortOption);
+              setSortBy(e.target.value as SortCriteria);
             });
           }}
+          aria-label="Sort books by criteria"
           className="select bg-[#23BE0A] text-white font-semibold text-base border-none rounded-xl px-6 py-2.5 h-auto min-h-0 focus:outline-none cursor-pointer"
         >
           <option disabled={true} value="default" className="bg-white text-[#131313]">

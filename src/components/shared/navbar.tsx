@@ -19,7 +19,12 @@ const Navbar = () => {
       <div className="navbar bg-base-100 px-0">
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden p-0 mr-3">
+            <div
+              tabIndex={0}
+              role="button"
+              aria-label="Open navigation menu"
+              className="btn btn-ghost lg:hidden p-0 mr-3"
+            >
               <svg
                 aria-label="Menu"
                 xmlns="http://www.w3.org/2000/svg"
