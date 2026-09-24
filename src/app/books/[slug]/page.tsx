@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import BookDetailsPageCard from '@/components/BookDetailsPageCard';
+import BookDetailsLoading from './loading';
 
 interface BookDetailsPageProps {
   params: Promise<{ slug: string }>;
 }
 
-const BookDetailsPage = async ({ params }: BookDetailsPageProps) => {
+const BookDetailsContent = async ({ params }: BookDetailsPageProps) => {
   const { slug } = await params;
+  return <BookDetailsPageCard slug={slug} />;
+};
 
+const BookDetailsPage = ({ params }: BookDetailsPageProps) => {
   return (
     <div className="container mx-auto py-10 px-4">
-      <BookDetailsPageCard slug={slug} />
+      <Suspense fallback={<BookDetailsLoading />}>
+        <BookDetailsContent params={params} />
+      </Suspense>
     </div>
   );
 };
