@@ -5,34 +5,16 @@ import Link from 'next/link';
 import { useBooks } from '@/context/BooksContext';
 import { Book } from '@/types/booktypes';
 import EmptyState from '@/components/shared/emptyState';
-
-type SortOption = 'default' | 'rating' | 'totalPages' | 'yearOfPublishing';
+import { sortBooks, SortCriteria } from '@/utils/sorting';
 
 const ReadBooksList = () => {
   const { readBooks, wishlist } = useBooks();
   const [activeTab, setActiveTab] = useState<'read' | 'wishlist'>('read');
-  const [sortBy, setSortBy] = useState<SortOption>('default');
+  const [sortBy, setSortBy] = useState<SortCriteria>('default');
   const [isPending, startTransition] = useTransition();
 
-  const sortList = React.useCallback(
-    (list: Book[]) => {
-      const copy = [...list];
-      if (sortBy === 'rating') {
-        return copy.sort((a, b) => b.rating - a.rating);
-      }
-      if (sortBy === 'totalPages') {
-        return copy.sort((a, b) => b.totalPages - a.totalPages);
-      }
-      if (sortBy === 'yearOfPublishing') {
-        return copy.sort((a, b) => b.yearOfPublishing - a.yearOfPublishing);
-      }
-      return copy;
-    },
-    [sortBy]
-  );
-
-  const sortedReadBooks = useMemo(() => sortList(readBooks), [readBooks, sortList]);
-  const sortedWishlistBooks = useMemo(() => sortList(wishlist), [wishlist, sortList]);
+  const sortedReadBooks = useMemo(() => sortBooks(readBooks, sortBy), [readBooks, sortBy]);
+  const sortedWishlistBooks = useMemo(() => sortBooks(wishlist, sortBy), [wishlist, sortBy]);
 
   const renderBookCards = (books: Book[], emptyMessage: string) => {
     if (isPending) {
