@@ -1,9 +1,10 @@
 import React from 'react';
+import ReadBooksList from '@/components/listedBooks/readBooksList';
 
 const ListedBooksPage = () => {
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold">Listed Books</h1>
+      <ReadBooksList />
     </div>
   );
 };
