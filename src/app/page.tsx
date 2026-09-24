@@ -2,7 +2,7 @@ import React from 'react';
 import Banner from '@/components/Homepage/banner';
 import Books from '@/components/Homepage/books';
 
-const page = () => {
+const HomePage = () => {
   return (
     <div>
       <Banner />
@@ -11,4 +11,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default HomePage;

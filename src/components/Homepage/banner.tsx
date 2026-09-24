@@ -22,7 +22,7 @@ const Banner = () => {
             width={600}
             height={400}
             className="object-cover rounded-xl"
-            
+            priority
           />
         </div>
       </div>
