@@ -2,6 +2,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { Book } from '@/types/booktypes';
 import { toast } from 'react-toastify';
+import { getStoredItem, setStoredItem } from '@/utils/storage';
 
 export interface BooksContextType {
   readBooks: Book[];
@@ -15,48 +16,22 @@ export interface BooksContextType {
 const BooksContext = createContext<BooksContextType | undefined>(undefined);
 
 export const BooksContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [readBooks, setReadBooks] = useState<Book[]>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem('readBooks');
-        return stored ? JSON.parse(stored) : [];
-      } catch (error) {
-        console.error('Error reading readBooks from localStorage:', error);
-        return [];
-      }
-    }
-    return [];
-  });
+  const [readBooks, setReadBooks] = useState<Book[]>(() =>
+    getStoredItem<Book[]>('readBooks', [])
+  );
 
-  const [wishlist, setWishlist] = useState<Book[]>(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem('wishlist');
-        return stored ? JSON.parse(stored) : [];
-      } catch (error) {
-        console.error('Error reading wishlist from localStorage:', error);
-        return [];
-      }
-    }
-    return [];
-  });
+  const [wishlist, setWishlist] = useState<Book[]>(() =>
+    getStoredItem<Book[]>('wishlist', [])
+  );
 
   // Sync readBooks to localStorage
   useEffect(() => {
-    try {
-      localStorage.setItem('readBooks', JSON.stringify(readBooks));
-    } catch (error) {
-      console.error('Error saving readBooks to localStorage:', error);
-    }
+    setStoredItem('readBooks', readBooks);
   }, [readBooks]);
 
   // Sync wishlist to localStorage
   useEffect(() => {
-    try {
-      localStorage.setItem('wishlist', JSON.stringify(wishlist));
-    } catch (error) {
-      console.error('Error saving wishlist to localStorage:', error);
-    }
+    setStoredItem('wishlist', wishlist);
   }, [wishlist]);
 
   const addToRead = async (book: Book): Promise<boolean> => {
