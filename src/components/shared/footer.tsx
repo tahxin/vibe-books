@@ -173,7 +173,8 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="border-t border-[#13131315] mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-[#13131380]">
           <p>
-            &copy; {new Date().getFullYear()} {process.env.NEXT_PUBLIC_APP_NAME || 'Book Vibe'}. All rights reserved.
+            &copy; {new Date().getFullYear()} {process.env.NEXT_PUBLIC_APP_NAME || 'Book Vibe'}. All rights reserved. &bull; Made with care by{' '}
+            <span className="text-[#131313] font-medium">Shahjalal Ahmed Nishat</span>
           </p>
           <div className="flex items-center gap-6">
             <span className="hover:text-[#131313] cursor-pointer transition-colors">

@@ -115,7 +115,7 @@ const PagesToReadPage = () => {
 
             <div className="bg-[#13131305] border border-[#13131315] rounded-2xl p-5 sm:p-6 text-center shadow-xs">
               <span className="text-xs sm:text-sm font-medium text-[#13131380]">Average Pages/Book</span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-[#50B1C9] mt-1">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#59C6D2] mt-1">
                 {Math.round(totalPages / readBooks.length)}
               </h3>
             </div>
