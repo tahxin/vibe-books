@@ -33,7 +33,7 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
     <div className="max-w-6xl mx-auto py-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         {/* Left Column: Book Cover Image */}
-        <div className="bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-[540px]">
+        <div className="bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-[560px]">
           <Image
             src={book.image}
             alt={book.bookName}
@@ -47,7 +47,7 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
 
         {/* Right Column: Book Details */}
         <div className="flex flex-col justify-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold font-serif text-[#131313] leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold font-[family-name:var(--font-playfair)] text-[#131313] leading-tight">
             {book.bookName}
           </h1>
 
@@ -55,20 +55,20 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
             By : {book.author}
           </p>
 
-          <div className="border-b border-[#13131326] my-2"></div>
+          <div className="border-b border-[#13131326] my-4"></div>
 
           <p className="text-base lg:text-lg text-[#131313CC] font-medium py-1">
             {book.category}
           </p>
 
-          <div className="border-b border-[#13131326] my-2"></div>
+          <div className="border-b border-[#13131326] my-4"></div>
 
-          <p className="text-[#131313B3] text-sm lg:text-base leading-relaxed my-3">
-            <strong className="text-[#131313] font-bold">Review : </strong>
+          <p className="text-[#131313B3] text-sm lg:text-base leading-relaxed my-4">
+            <span className="font-bold text-[#131313]">Review : </span>
             {book.review}
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 my-3">
+          <div className="flex flex-wrap items-center gap-3 my-4">
             <span className="font-bold text-sm lg:text-base text-[#131313] mr-2">Tag</span>
             {book.tags?.map((tag, index) => (
               <span
@@ -82,21 +82,21 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
 
           <div className="border-b border-[#13131326] my-4"></div>
 
-          <div className="space-y-2.5 text-sm lg:text-base">
+          <div className="space-y-3 text-sm lg:text-base">
             <div className="flex items-center">
-              <span className="w-48 text-[#131313B3]">Number of Pages:</span>
+              <span className="w-52 text-[#131313B3]">Number of Pages:</span>
               <span className="font-bold text-[#131313]">{book.totalPages}</span>
             </div>
             <div className="flex items-center">
-              <span className="w-48 text-[#131313B3]">Publisher:</span>
+              <span className="w-52 text-[#131313B3]">Publisher:</span>
               <span className="font-bold text-[#131313]">{book.publisher}</span>
             </div>
             <div className="flex items-center">
-              <span className="w-48 text-[#131313B3]">Year of Publishing:</span>
+              <span className="w-52 text-[#131313B3]">Year of Publishing:</span>
               <span className="font-bold text-[#131313]">{book.yearOfPublishing}</span>
             </div>
             <div className="flex items-center">
-              <span className="w-48 text-[#131313B3]">Rating:</span>
+              <span className="w-52 text-[#131313B3]">Rating:</span>
               <span className="font-bold text-[#131313]">{book.rating}</span>
             </div>
           </div>

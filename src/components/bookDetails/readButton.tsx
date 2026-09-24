@@ -9,7 +9,7 @@ const ReadButton = ({ book }: { book: Book }) => {
   return (
     <button
       onClick={() => addToRead(book)}
-      className="btn bg-white hover:bg-gray-100 text-[#131313] font-semibold text-base px-8 py-3 rounded-xl border border-[#1313134D] shadow-none h-auto min-h-0 transition-colors"
+      className="btn bg-white hover:bg-gray-50 text-[#131313] font-semibold text-base px-8 py-3 rounded-lg border border-[#1313134D] shadow-none h-auto min-h-0 transition-colors cursor-pointer"
     >
       Read
     </button>
