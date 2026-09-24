@@ -1,5 +1,4 @@
-
-interface Book {
+export interface Book {
   bookId: number;
   bookName: string;
   author: string;
@@ -13,7 +12,4 @@ interface Book {
   yearOfPublishing: number;
 }
 
-
-
-
-export default Book;
+export type { Book as default };
