@@ -1,9 +1,30 @@
+import type { Metadata } from 'next';
 import React, { Suspense } from 'react';
-import BookDetailsPageCard from '@/components/BookDetailsPageCard';
+import BookDetailsPageCard, { getBookBySlug } from '@/components/BookDetailsPageCard';
 import BookDetailsLoading from './loading';
 
 interface BookDetailsPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: BookDetailsPageProps): Promise<Metadata> {
+  try {
+    const { slug } = await params;
+    const book = getBookBySlug(slug);
+    if (!book) {
+      return {
+        title: `Book Not Found | ${process.env.NEXT_PUBLIC_APP_NAME || 'Book Vibe'}`,
+      };
+    }
+    return {
+      title: `${book.bookName} | ${process.env.NEXT_PUBLIC_APP_NAME || 'Book Vibe'}`,
+      description: book.review.slice(0, 160),
+    };
+  } catch {
+    return {
+      title: `Book Details | ${process.env.NEXT_PUBLIC_APP_NAME || 'Book Vibe'}`,
+    };
+  }
 }
 
 const BookDetailsContent = async ({ params }: BookDetailsPageProps) => {
