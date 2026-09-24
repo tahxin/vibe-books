@@ -67,7 +67,7 @@ const Navbar = () => {
             </ul>
           </div>
           <Link href="/" className="font-extrabold text-2xl lg:text-[28px] text-[#131313] tracking-tight">
-            Book Vibe
+            {process.env.NEXT_PUBLIC_APP_NAME || "Book Vibe"}
           </Link>
         </div>
 
