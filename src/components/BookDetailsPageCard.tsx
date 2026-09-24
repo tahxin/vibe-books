@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Book from '@/types/booktypes';
 import booksData from '../../public/booksData.json';
@@ -16,6 +17,7 @@ export const getBookBySlug = (slug: string | number): Book | undefined => {
 };
 
 const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const book = propBook || (slug ? getBookBySlug(slug) : undefined);
 
   if (!book) {
@@ -32,14 +34,20 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
   return (
     <div className="max-w-6xl mx-auto py-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-        {/* Left Column: Book Cover Image */}
-        <div className="bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-[560px]">
+        {/* Left Column: Book Cover Image with local loading placeholder */}
+        <div className="relative bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-[560px]">
+          {!imageLoaded && (
+            <div className="w-[300px] h-[440px] bg-base-300/40 rounded-xl animate-pulse absolute"></div>
+          )}
           <Image
             src={book.image}
             alt={book.bookName}
             width={340}
             height={480}
-            className="rounded-xl shadow-2xl object-contain max-h-[460px] w-auto transition-transform duration-300 hover:scale-[1.02]"
+            className={`rounded-xl shadow-2xl object-contain max-h-[460px] w-auto transition-all duration-500 hover:scale-[1.02] ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+            onLoad={() => setImageLoaded(true)}
             priority
             unoptimized
           />

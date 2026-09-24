@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useTransition } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useBooks } from '@/context/BooksContext';
@@ -11,6 +11,7 @@ const ReadBooksList = () => {
   const { readBooks, wishlist } = useBooks();
   const [activeTab, setActiveTab] = useState<'read' | 'wishlist'>('read');
   const [sortBy, setSortBy] = useState<SortOption>('default');
+  const [isPending, startTransition] = useTransition();
 
   const sortList = React.useCallback(
     (list: Book[]) => {
@@ -33,6 +34,17 @@ const ReadBooksList = () => {
   const sortedWishlistBooks = useMemo(() => sortList(wishlist), [wishlist, sortList]);
 
   const renderBookCards = (books: Book[], emptyMessage: string) => {
+    if (isPending) {
+      return (
+        <div className="flex flex-col items-center justify-center py-16 gap-3">
+          <span className="loading loading-spinner loading-md text-[#23BE0A]"></span>
+          <span className="text-sm font-medium text-[#13131380] animate-pulse">
+            Updating books list...
+          </span>
+        </div>
+      );
+    }
+
     if (books.length === 0) {
       return (
         <div className="text-center py-16 px-4 bg-[#13131305] rounded-2xl border border-dashed border-[#13131326] my-4">
@@ -56,7 +68,7 @@ const ReadBooksList = () => {
         {books.map((book: Book) => (
           <div
             key={book.bookId}
-            className="border border-[#13131326] rounded-2xl p-6 bg-white flex flex-col md:flex-row gap-6 items-center shadow-none"
+            className="border border-[#13131326] rounded-2xl p-6 bg-white flex flex-col md:flex-row gap-6 items-center shadow-none transition-all duration-300 hover:shadow-xs"
           >
             {/* Left Cover Box */}
             <div className="bg-[#13131308] rounded-2xl w-full md:w-56 h-60 flex items-center justify-center p-6 shrink-0">
@@ -193,7 +205,7 @@ const ReadBooksList = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn bg-[#23BE0A] hover:bg-[#1fa909] text-white font-semibold text-lg px-6 py-3 rounded-xl border-none gap-3 shadow-none h-auto min-h-0 cursor-pointer"
+            className="btn bg-[#23BE0A] hover:bg-[#1fa909] text-white font-semibold text-lg px-6 py-3 rounded-xl border-none gap-3 shadow-none h-auto min-h-0 cursor-pointer flex items-center"
           >
             <span>
               {sortBy === 'rating'
@@ -224,7 +236,11 @@ const ReadBooksList = () => {
           >
             <li>
               <button
-                onClick={() => setSortBy('rating')}
+                onClick={() => {
+                  startTransition(() => {
+                    setSortBy('rating');
+                  });
+                }}
                 className={sortBy === 'rating' ? 'active' : ''}
               >
                 Rating
@@ -232,7 +248,11 @@ const ReadBooksList = () => {
             </li>
             <li>
               <button
-                onClick={() => setSortBy('totalPages')}
+                onClick={() => {
+                  startTransition(() => {
+                    setSortBy('totalPages');
+                  });
+                }}
                 className={sortBy === 'totalPages' ? 'active' : ''}
               >
                 Number of pages
@@ -240,7 +260,11 @@ const ReadBooksList = () => {
             </li>
             <li>
               <button
-                onClick={() => setSortBy('yearOfPublishing')}
+                onClick={() => {
+                  startTransition(() => {
+                    setSortBy('yearOfPublishing');
+                  });
+                }}
                 className={sortBy === 'yearOfPublishing' ? 'active' : ''}
               >
                 Publisher year
@@ -249,7 +273,11 @@ const ReadBooksList = () => {
             {sortBy !== 'default' && (
               <li>
                 <button
-                  onClick={() => setSortBy('default')}
+                  onClick={() => {
+                    startTransition(() => {
+                      setSortBy('default');
+                    });
+                  }}
                   className="text-error"
                 >
                   Reset Sort
@@ -270,7 +298,11 @@ const ReadBooksList = () => {
           className="tab text-base font-semibold text-[#131313CC]"
           aria-label="Read Books"
           checked={activeTab === 'read'}
-          onChange={() => setActiveTab('read')}
+          onChange={() => {
+            startTransition(() => {
+              setActiveTab('read');
+            });
+          }}
         />
         <div
           role="tabpanel"
@@ -287,7 +319,11 @@ const ReadBooksList = () => {
           className="tab text-base font-semibold text-[#131313CC]"
           aria-label="Wishlist Books"
           checked={activeTab === 'wishlist'}
-          onChange={() => setActiveTab('wishlist')}
+          onChange={() => {
+            startTransition(() => {
+              setActiveTab('wishlist');
+            });
+          }}
         />
         <div
           role="tabpanel"
