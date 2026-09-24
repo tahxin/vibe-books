@@ -199,93 +199,30 @@ const ReadBooksList = () => {
         <h1 className="text-3xl font-bold text-[#131313]">Books</h1>
       </div>
 
-      {/* Sort Dropdown */}
+      {/* Sort Select */}
       <div className="flex justify-center mb-8">
-        <div className="dropdown dropdown-bottom">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn bg-[#23BE0A] hover:bg-[#1fa909] text-white font-semibold text-lg px-6 py-3 rounded-xl border-none gap-3 shadow-none h-auto min-h-0 cursor-pointer flex items-center"
-          >
-            <span>
-              {sortBy === 'rating'
-                ? 'Sorted by Rating'
-                : sortBy === 'totalPages'
-                ? 'Sorted by Pages'
-                : sortBy === 'yearOfPublishing'
-                ? 'Sorted by Publishing Year'
-                : 'Sort By'}
-            </span>
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content menu p-2 shadow-lg bg-base-100 rounded-box w-56 mt-2 z-10 border border-base-200"
-          >
-            <li>
-              <button
-                onClick={() => {
-                  startTransition(() => {
-                    setSortBy('rating');
-                  });
-                }}
-                className={sortBy === 'rating' ? 'active' : ''}
-              >
-                Rating
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  startTransition(() => {
-                    setSortBy('totalPages');
-                  });
-                }}
-                className={sortBy === 'totalPages' ? 'active' : ''}
-              >
-                Number of pages
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  startTransition(() => {
-                    setSortBy('yearOfPublishing');
-                  });
-                }}
-                className={sortBy === 'yearOfPublishing' ? 'active' : ''}
-              >
-                Publisher year
-              </button>
-            </li>
-            {sortBy !== 'default' && (
-              <li>
-                <button
-                  onClick={() => {
-                    startTransition(() => {
-                      setSortBy('default');
-                    });
-                  }}
-                  className="text-error"
-                >
-                  Reset Sort
-                </button>
-              </li>
-            )}
-          </ul>
-        </div>
+        <select
+          value={sortBy}
+          onChange={(e) => {
+            startTransition(() => {
+              setSortBy(e.target.value as SortOption);
+            });
+          }}
+          className="select bg-[#23BE0A] text-white font-semibold text-base border-none rounded-xl px-6 py-2.5 h-auto min-h-0 focus:outline-none cursor-pointer"
+        >
+          <option disabled={true} value="default" className="bg-white text-[#131313]">
+            Sort By
+          </option>
+          <option value="rating" className="bg-white text-[#131313]">
+            Rating
+          </option>
+          <option value="totalPages" className="bg-white text-[#131313]">
+            Number of Pages
+          </option>
+          <option value="yearOfPublishing" className="bg-white text-[#131313]">
+            Published Year
+          </option>
+        </select>
       </div>
 
       {/* DaisyUI Radio Tabs Lift */}
