@@ -35,16 +35,16 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
     <div className="max-w-6xl mx-auto py-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         {/* Left Column: Book Cover Image with local loading placeholder */}
-        <div className="relative bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-[560px]">
+        <div className="relative bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-140">
           {!imageLoaded && (
-            <div className="w-[300px] h-[440px] bg-base-300/40 rounded-xl animate-pulse absolute"></div>
+            <div className="w-75 h-110 bg-base-300/40 rounded-xl animate-pulse absolute"></div>
           )}
           <Image
             src={book.image}
             alt={book.bookName}
             width={340}
             height={480}
-            className={`rounded-xl shadow-2xl object-contain max-h-[460px] w-auto transition-all duration-500 hover:scale-[1.02] ${
+            className={`rounded-xl shadow-2xl object-contain max-h-115 w-auto transition-all duration-500 hover:scale-[1.02] ${
               imageLoaded ? 'opacity-100' : 'opacity-0'
             }`}
             onLoad={() => setImageLoaded(true)}
@@ -55,7 +55,7 @@ const BookDetailsPageCard = ({ book: propBook, slug }: BookDetailsPageCardProps)
 
         {/* Right Column: Book Details */}
         <div className="flex flex-col justify-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold font-[family-name:var(--font-playfair)] text-[#131313] leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-bold font-(family-name:--font-playfair) text-[#131313] leading-tight">
             {book.bookName}
           </h1>
 

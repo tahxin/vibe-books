@@ -6,8 +6,8 @@ export default function BookDetailsLoading() {
       <div className="max-w-6xl mx-auto py-6 animate-pulse">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           {/* Left Column Skeleton */}
-          <div className="bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-[560px]">
-            <div className="w-[300px] h-[440px] bg-base-300/60 rounded-xl"></div>
+          <div className="bg-[#13131308] rounded-3xl p-10 sm:p-14 lg:p-20 flex items-center justify-center min-h-140">
+            <div className="w-75 h-110 bg-base-300/60 rounded-xl"></div>
           </div>
 
           {/* Right Column Skeleton */}

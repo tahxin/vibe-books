@@ -85,7 +85,7 @@ const ReadBooksList = () => {
             {/* Right Details */}
             <div className="flex-1 w-full flex flex-col justify-between">
               <div>
-                <h2 className="text-2xl font-bold font-[family-name:var(--font-playfair)] text-[#131313]">
+                <h2 className="text-2xl font-bold font-(family-name:--font-playfair) text-[#131313]">
                   {book.bookName}
                 </h2>
                 <p className="text-base font-medium text-[#131313CC] mt-2 mb-3">
