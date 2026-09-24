@@ -38,12 +38,12 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={-1}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow-lg"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-2xl z-20 mt-3 w-56 p-3 shadow-xl border border-[#13131315] space-y-1"
             >
               <li>
                 <Link
                   href="/"
-                  className={pathname === '/' ? 'text-[#23BE0A] font-semibold' : ''}
+                  className={pathname === '/' ? 'text-[#23BE0A] font-bold bg-[#23BE0A12]' : 'text-[#131313CC] hover:text-[#23BE0A]'}
                 >
                   Home
                 </Link>
@@ -51,7 +51,7 @@ const Navbar = () => {
               <li>
                 <Link
                   href="/listed-books"
-                  className={pathname === '/listed-books' ? 'text-[#23BE0A] font-semibold' : ''}
+                  className={pathname === '/listed-books' ? 'text-[#23BE0A] font-bold bg-[#23BE0A12]' : 'text-[#131313CC] hover:text-[#23BE0A]'}
                 >
                   Listed Books
                 </Link>
@@ -59,10 +59,20 @@ const Navbar = () => {
               <li>
                 <Link
                   href="/pages-to-read"
-                  className={pathname === '/pages-to-read' ? 'text-[#23BE0A] font-semibold' : ''}
+                  className={pathname === '/pages-to-read' ? 'text-[#23BE0A] font-bold bg-[#23BE0A12]' : 'text-[#131313CC] hover:text-[#23BE0A]'}
                 >
                   Pages to Read
                 </Link>
+              </li>
+              <li className="pt-2 border-t border-[#13131315] sm:hidden">
+                <div className="flex flex-col gap-2 p-0 mt-1">
+                  <button className="btn btn-sm bg-[#23BE0A] hover:bg-[#1fa909] text-white font-semibold rounded-lg border-none w-full">
+                    Sign In
+                  </button>
+                  <button className="btn btn-sm bg-[#59C6D2] hover:bg-[#4eb3be] text-white font-semibold rounded-lg border-none w-full">
+                    Sign Up
+                  </button>
+                </div>
               </li>
             </ul>
           </div>

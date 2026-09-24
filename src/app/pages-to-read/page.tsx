@@ -140,7 +140,7 @@ const PagesToReadPage = () => {
                 <span className="loading loading-spinner loading-lg text-[#23BE0A]"></span>
               </div>
             ) : (
-              <div className="w-full h-[440px] sm:h-[480px]">
+              <div className="w-full h-110 sm:h-120">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
                     data={chartData}

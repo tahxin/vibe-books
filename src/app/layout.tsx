@@ -4,6 +4,7 @@ import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Navbar from "@/components/shared/navbar";
+import Footer from "@/components/shared/footer";
 import BooksContextProvider from "@/context/BooksContext";
 
 const geistSans = Geist({
@@ -41,9 +42,7 @@ export default function RootLayout({
         <BooksContextProvider>
           <Navbar />
           <main className="flex-1">{children}</main>
-          <footer className="border-t border-[#13131315] bg-white text-base-content/60 p-6 text-center text-sm">
-            &copy; {new Date().getFullYear()} {process.env.NEXT_PUBLIC_APP_NAME || "Book Vibe"}. All rights reserved.
-          </footer>
+          <Footer />
           <ToastContainer
             position="top-right"
             autoClose={Number(process.env.NEXT_PUBLIC_TOAST_AUTO_CLOSE) || 3000}
